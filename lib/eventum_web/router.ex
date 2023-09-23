@@ -20,6 +20,14 @@ defmodule EventumWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/api/ql/" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: EventumQL.Schema
+
+    forward "/", Absinthe.Plug, schema: EventumQL.Schema
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", EventumWeb do
   #   pipe_through :api
